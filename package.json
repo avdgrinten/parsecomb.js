@@ -1,0 +1,19 @@
+
+{
+	"name": "parsecomb.js",
+	"version": "0.1.0",
+	
+	"author": "Alexander van der Grinten",
+	"description": "Parsing combinators for JavaScript",
+	
+	"main": "./lib/index.js",
+	"files": [
+		"lib/index.js"
+	],
+	
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/avdgrinten/parsecomb.js"
+	}
+}
+
