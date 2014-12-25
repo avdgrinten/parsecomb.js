@@ -60,7 +60,7 @@ The output for `'xxx'` will be the string `xxx` instead.
 Changing the input of the previous snippet to `'xxy'` will still print `xx`: Our parser does not check if it reached the end of the input. We can simply fix this by using the sequence combinator `seq()` and the end-of-input combinator `eof()`:
 
 ```javascript
-var multipleXParser = /* some code as before */
+var multipleXParser = /* same code as before */
 
 var finalParser = pc.seq(
 	[ multipleXParser,
