@@ -94,6 +94,39 @@ var numberParser = pc.seq(
 
 `optional()` returns the result of its first argument if that succeeds or null otherwise.
 
+### Recursion
+
+The techniques covered so far are sufficient to parse a wide range of languages. However sometimes you need to parse recursive expressions. A common situation is parsing arithmetic expressions with parenthesis. We want to define a `tokenParser` that parses a single number or parenthesis expression and an `exprParser` that parses sequences of the form `token + token`.
+
+Obviously we have to define `tokenParser` first because we want to use it as a building block for `exprParser`. But because each parenthesis can contain an arithmetic expression itself, we also need `exprParser` to define `tokenParser`.
+
+The solution to this problem is the `production()` combinator. `production()` returns a special parser object that has a `define()` method. This method is used to delegate to another parser. Now we can do the following:
+
+```javascript
+var tokenParser = pc.production();
+var exprParser = pc.production();
+
+tokenParser.define(pc.alternative(
+	[ numberParser,
+		pc.seq(
+			[ pc.certainChar('('),
+				exprParser,
+				pc.certainChar(')')
+			]
+		)
+	]
+));
+
+exprParser.define(pc.seq(
+	[ tokenParser,
+		pc.certainChar('+'),
+		tokenParser
+	]
+));
+```
+
+The `alternative()` combinator tries to parse each of the parsers passed in the first argument and returns the result of the first parser that succeeds.
+
 ### Full example: Parsing arithmetic expressions
 
 The file `example/arithmetic.js` contains a full example for parsing arithmetic expressions with correct operator precedence.
