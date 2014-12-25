@@ -92,7 +92,7 @@ var numberParser = pc.seq(
 
 `singleChar()` is a combinator that takes a predicate function that gets a character as only argument and succeeds if this function returns true. `isDigit10` simply checks if a character is between '0' and '9'.
 
-`optional()` returns the result of its first argument if that succeeds or null otherwise.
+`optional()` returns the result of its first argument if that succeeds or `null` otherwise.
 
 ### Recursion
 
@@ -131,3 +131,50 @@ The `alternative()` combinator tries to parse each of the parsers passed in the 
 
 The file `example/arithmetic.js` contains a full example for parsing arithmetic expressions with correct operator precedence.
 
+## Reference documentation
+
+### Combinators
+
+#### `seq(array_of_parsers, transform)`
+
+Calls each parser from `array_of_parsers` sequentially. Succeeds if they all succeed.
+
+**Arguments**:
+- `array_of_parsers`: Array of parser objects
+- `transform`: Transformation function
+
+**Output**: Array containing the output of each parser in `array_of_parsers`
+
+#### `optional(parser, transform)`
+
+Call `parser`. Succeeds always.
+
+**Arguments**:
+- `parser`: Parser object
+- `transform`: Transformation function
+
+**Output**: Output of `parser` if it succeeded. `null` otherwise.
+
+#### `zeroPlus(parser, transform)`
+
+Calls `parser` until it fails.
+
+**Arguments**:
+- `parser`: Parser object
+- `transform`: Transformation function
+
+**Output**: Array containg the output of the successive calls to `parser`
+
+#### `onePlus(parser, transform)`
+
+See `zeroPlus(parser, transform)`. Only succeeds if `parser` succeeds at least once.
+
+#### `alternative(array_of_parsers, transform)`
+
+Tries to parse each parser from `array_of_parsers` until one succeeds. Succeeds if one parser succeeds.
+
+**Arguments**:
+- `array_of_parsers`: Array of parser objects
+- `transform`: Transformation function
+
+**Output**: Output of the first parser in `array_of_parsers` that succeeds.
