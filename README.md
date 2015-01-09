@@ -16,7 +16,7 @@ var pc = require('parsecomb.js');
 
 var singleXParser = pc.certainChar('x');
 
-var result = parseSync(singleXParser, new pc.StringInput('x'));
+var result = pc.parseSync(singleXParser, new pc.StringInput('x'));
 console.log(result);
 ```
 
@@ -145,6 +145,8 @@ Calls each parser from `array_of_parsers` sequentially. Succeeds if they all suc
 
 **Output**: Array containing the output of each parser in `array_of_parsers`
 
+---
+
 #### `optional(parser, transform)`
 
 Call `parser`. Succeeds always.
@@ -154,6 +156,8 @@ Call `parser`. Succeeds always.
 - `transform`: Transformation function
 
 **Output**: Output of `parser` if it succeeded. `null` otherwise.
+
+---
 
 #### `zeroPlus(parser, transform)`
 
@@ -165,9 +169,13 @@ Calls `parser` until it fails.
 
 **Output**: Array containg the output of the successive calls to `parser`
 
+---
+
 #### `onePlus(parser, transform)`
 
 See `zeroPlus(parser, transform)`. Only succeeds if `parser` succeeds at least once.
+
+---
 
 #### `alternative(array_of_parsers, transform)`
 
